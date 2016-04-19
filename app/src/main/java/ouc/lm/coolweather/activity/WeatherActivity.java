@@ -54,6 +54,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText=(TextView)findViewById(R.id.current_date);
         switchCity=(Button)findViewById(R.id.switch_city);
         refreshWeather=(Button)findViewById(R.id.refresh_weather);
+        switchCity.setOnClickListener(this);
+        refreshWeather.setOnClickListener(this);
         String countyCode=getIntent().getStringExtra("county_code");
         if (!TextUtils.isEmpty(countyCode)){
             //有县级代号时，就去查询天气
@@ -80,8 +82,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.refresh_weather:
                 publishText.setText("同步中.....");
-                SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
-                String weatherCode=prefs.getString("weather_code","");
+                SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);   //获得数据库操作对象
+                String weatherCode=prefs.getString("weather_code","");  //参数一是从数据库中检索的参数，参数二表示如果不存在，返回值设为空
                 if (!TextUtils.isEmpty(weatherCode)){
                     queryWeatherInfo(weatherCode);
                 }
